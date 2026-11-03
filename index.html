@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFUSO | Fashion & Home Decor Studio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        earth: {
+                            50: '#faf7f2',
+                            100: '#f3ece0',
+                            200: '#e5d7c3',
+                            300: '#d5bfa1',
+                            400: '#c3a37d',
+                            500: '#b2895f',
+                            600: '#9b6e49',
+                            700: '#7d543b',
+                            800: '#674635',
+                            900: '#543a2e',
+                        },
+                        terracotta: {
+                            500: '#c86d51',
+                            600: '#b1553b',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf7f2;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1c1917;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3a37d;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-earth-50 text-stone-800 dark:bg-stone-900 dark:text-stone-100 transition-colors duration-300 antialiased selection:bg-earth-400 selection:text-white">
+
+   
+
+    <!-- Sticky Header Navbar -->
+    <header class="sticky top-0 z-40 bg-earth-50/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-earth-200/60 dark:border-stone-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Mobile Menu Trigger -->
+            <button id="mobileMenuBtn" aria-label="Toggle Navigation" class="md:hidden text-stone-700 dark:text-stone-200 text-xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="#" class="flex flex-col items-center group">
+                <span class="font-serif text-3xl font-bold tracking-widest text-earth-900 dark:text-earth-100 group-hover:text-earth-600 transition">INFUSO</span>
+                <span class="text-[9px] uppercase tracking-[0.3em] text-earth-600 dark:text-earth-400 -mt-1 font-semibold">Studio & Living</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#hero" class="hover:text-earth-600 dark:hover:text-earth-300 transition">Home</a>
+                <a href="#products" class="hover:text-earth-600 dark:hover:text-earth-300 transition">Shop Collection</a>
+                <a href="#youtube" class="hover:text-earth-600 dark:hover:text-earth-300 transition flex items-center gap-1.5 text-red-600 dark:text-red-400">
+                    <i class="fa-brands fa-youtube text-base"></i> Lookbooks
+                </a>
+                <a href="#about" class="hover:text-earth-600 dark:hover:text-earth-300 transition">About Studio</a>
+                <a href="#reviews" class="hover:text-earth-600 dark:hover:text-earth-300 transition">Reviews</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" aria-label="Toggle Mode" class="p-2 rounded-full hover:bg-earth-200/50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 transition">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Search Trigger -->
+                <button id="searchBtn" aria-label="Search" class="p-2 hover:text-earth-600 dark:hover:text-earth-300 transition">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+
+                <!-- Cart Button with Counter -->
+                <button id="cartBtn" aria-label="Open Shopping Cart" class="relative p-2 text-stone-800 dark:text-stone-100 hover:text-earth-600 transition">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-terracotta-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-earth-50 dark:border-stone-900">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-earth-50 dark:bg-stone-900 border-b border-earth-200 dark:border-stone-800 px-6 py-6 space-y-4">
+            <a href="#hero" class="mobile-link block font-medium text-lg text-stone-800 dark:text-stone-100">Home</a>
+            <a href="#products" class="mobile-link block font-medium text-lg text-stone-800 dark:text-stone-100">Shop Collection</a>
+            <a href="#youtube" class="mobile-link block font-medium text-lg text-red-600 dark:text-red-400">YouTube Lookbooks</a>
+            <a href="#about" class="mobile-link block font-medium text-lg text-stone-800 dark:text-stone-100">About Studio</a>
+            <a href="#reviews" class="mobile-link block font-medium text-lg text-stone-800 dark:text-stone-100">Reviews</a>
+        </div>
+    </header>
+
+    <!-- Search Overlay Modal -->
+    <div id="searchModal" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-24 px-4">
+        <div class="bg-earth-50 dark:bg-stone-900 w-full max-w-2xl rounded-2xl p-6 shadow-2xl border border-earth-200 dark:border-stone-800">
+            <div class="flex items-center justify-between pb-4 border-b border-earth-200 dark:border-stone-800">
+                <input type="text" id="searchInput" placeholder="Search apparel, ceramic vases, linen items..." class="w-full bg-transparent text-xl focus:outline-none text-stone-800 dark:text-stone-100 placeholder-stone-400">
+                <button id="closeSearch" class="p-2 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div id="searchResults" class="mt-4 max-h-60 overflow-y-auto space-y-2">
+                <p class="text-sm text-stone-400">Start typing to search products...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Banner Section -->
+    <section id="hero" class="relative min-h-[85vh] flex items-center overflow-hidden">
+        <!-- Background Images Carousel / Hero Visual -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1920&q=80" alt="Earthy Living Space" class="w-full h-full object-cover object-center opacity-90 dark:opacity-40 transition-transform duration-1000 scale-105" onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/b2895f/ffffff?text=INFUSO+Living+Studio';">
+            <div class="absolute inset-0 bg-gradient-to-r from-earth-50/95 via-earth-50/60 to-transparent dark:from-stone-900/95 dark:via-stone-900/70 dark:to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="max-w-xl space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-earth-200/80 dark:bg-stone-800/80 text-earth-800 dark:text-earth-200 text-xs font-semibold tracking-wider uppercase border border-earth-300 dark:border-stone-700">
+                    <span>🌿 Sustainable Fashion & Home Craft</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl font-serif font-bold text-earth-900 dark:text-stone-100 leading-tight">
+                    Curated Aesthetics for Body & Sanctuary.
+                </h1>
+
+                <p class="text-lg text-stone-600 dark:text-stone-300 leading-relaxed font-light">
+                    Handmade organic apparel paired with artisan ceramic & wooden home decor. Step into our world through our video styling guides.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                    <a href="#products" class="px-8 py-4 rounded-xl bg-earth-800 hover:bg-earth-700 text-white font-medium text-center shadow-lg shadow-earth-800/30 transition transform hover:-translate-y-0.5">
+                        Shop Collection <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
+                    </a>
+                    
+                </div>
+
+                <!-- Live Channel Subscriber Callout -->
+                <div class="pt-8 flex items-center space-x-6 border-t border-stone-300/60 dark:border-stone-800">
+                    <div>
+                        <span class="block text-2xl font-bold font-serif text-stone-900 dark:text-white">125K+</span>
+                        <span class="text-xs text-stone-500 uppercase tracking-wider">YouTube Family</span>
+                    </div>
+                    <div class="h-8 w-px bg-stone-300 dark:bg-stone-800"></div>
+                    <div>
+                        <span class="block text-2xl font-bold font-serif text-stone-900 dark:text-white">4.9 ★</span>
+                        <span class="text-xs text-stone-500 uppercase tracking-wider">Customer Rating</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="py-12 bg-earth-100/60 dark:bg-stone-800/40 border-y border-earth-200/50 dark:border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="p-4 space-y-2">
+                <i class="fa-solid fa-leaf text-2xl text-earth-600 dark:text-earth-400"></i>
+                <h4 class="font-bold text-sm">100% Organic Fabrics</h4>
+                <p class="text-xs text-stone-500 dark:text-stone-400">Sustainably sourced linen & cotton</p>
+            </div>
+            <div class="p-4 space-y-2">
+                <i class="fa-solid fa-hands-holding-circle text-2xl text-earth-600 dark:text-earth-400"></i>
+                <h4 class="font-bold text-sm">Handcrafted Decor</h4>
+                <p class="text-xs text-stone-500 dark:text-stone-400">Small-batch artisanal ceramics</p>
+            </div>
+            <div class="p-4 space-y-2">
+                <i class="fa-solid fa-truck-fast text-2xl text-earth-600 dark:text-earth-400"></i>
+                <h4 class="font-bold text-sm">Worldwide Express Shipping</h4>
+                <p class="text-xs text-stone-500 dark:text-stone-400">Eco-friendly plastic-free packaging</p>
+            </div>
+            <div class="p-4 space-y-2">
+                <i class="fa-solid fa-play text-2xl text-red-600 dark:text-red-400"></i>
+                <h4 class="font-bold text-sm">Weekly Lookbooks</h4>
+                <p class="text-xs text-stone-500 dark:text-stone-400">Styling videos direct from creator</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- E-Commerce Products Section -->
+    <section id="products" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <span class="text-xs font-semibold uppercase tracking-widest text-earth-600 dark:text-earth-400">The Catalog</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-1">Featured Creations</h2>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="categoryFilters">
+                <button data-category="all" class="cat-btn active-cat px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition bg-earth-800 text-white shadow-md">All Items</button>
+                <button data-category="fashion" class="cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition bg-earth-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-earth-300">Fashion</button>
+                <button data-category="decor" class="cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition bg-earth-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-earth-300">Home Decor</button>
+                <button data-category="bestseller" class="cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition bg-earth-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-earth-300">★ Best Sellers</button>
+            </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="productGrid">
+            <!-- Dynamic JavaScript Product Injection -->
+        </div>
+    </section>
+
+    <!-- YouTube Video / Lookbook Showcase -->
+    <section id="youtube" class="py-20 bg-stone-900 text-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-red-500 flex items-center gap-2">
+                        <i class="fa-brands fa-youtube text-lg"></i> YouTube Channel Showcase
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">Latest Lookbooks & Decor Tours</h2>
+                </div>
+                <a href="https://youtube.com" target="_blank" class="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-red-400 hover:text-red-300 transition">
+                    Subscribe on YouTube <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Featured Video -->
+                <div class="lg:col-span-2 bg-stone-800 rounded-3xl overflow-hidden border border-stone-700 shadow-2xl flex flex-col">
+                    <div class="relative aspect-video w-full">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=preview" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs text-earth-400 font-semibold uppercase tracking-wider">Autumn Collection Premiere</span>
+                            <h3 class="text-xl font-bold font-serif text-white mt-1">Styling Minimalist Linen Outfits & Terracotta Decor</h3>
+                            <p class="text-sm text-stone-400 mt-2">Join us in this episode as we walk through layer styling for transitional weather and how to arrange hand-crafted ceramics for living rooms.</p>
+                        </div>
+                        <div class="mt-6 flex items-center justify-between pt-4 border-t border-stone-700">
+                            <span class="text-xs text-stone-400"><i class="fa-regular fa-eye mr-1"></i> 48,200 views</span>
+                            <button onclick="scrollToShop()" class="px-4 py-2 rounded-xl bg-earth-600 hover:bg-earth-500 text-white text-xs font-bold uppercase tracking-wider transition">Shop Featured Items</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Video Playlist Sidebar -->
+                <div class="space-y-4 flex flex-col justify-between">
+                    <!-- Video Card 1 -->
+                    <div class="bg-stone-800 p-4 rounded-2xl border border-stone-700 flex gap-4 hover:border-earth-500 transition cursor-pointer">
+                        <div class="w-32 h-20 bg-stone-700 rounded-xl overflow-hidden flex-shrink-0 relative">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/c3a37d/ffffff?text=Decor+Tour';">
+                            <i class="fa-solid fa-play absolute inset-0 m-auto w-6 h-6 bg-red-600/90 text-white rounded-full flex items-center justify-center text-[10px]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white line-clamp-2">Room Tour: Cozy Earth-Toned Living Space</h4>
+                            <p class="text-xs text-stone-400 mt-1">12 min • Home Decor</p>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 2 -->
+                    <div class="bg-stone-800 p-4 rounded-2xl border border-stone-700 flex gap-4 hover:border-earth-500 transition cursor-pointer">
+                        <div class="w-32 h-20 bg-stone-700 rounded-xl overflow-hidden flex-shrink-0 relative">
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/9b6e49/ffffff?text=Fashion+Capsule';">
+                            <i class="fa-solid fa-play absolute inset-0 m-auto w-6 h-6 bg-red-600/90 text-white rounded-full flex items-center justify-center text-[10px]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white line-clamp-2">10-Piece Capsule Wardrobe For Fall</h4>
+                            <p class="text-xs text-stone-400 mt-1">18 min • Sustainable Fashion</p>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 3 -->
+                    <div class="bg-stone-800 p-4 rounded-2xl border border-stone-700 flex gap-4 hover:border-earth-500 transition cursor-pointer">
+                        <div class="w-32 h-20 bg-stone-700 rounded-xl overflow-hidden flex-shrink-0 relative">
+                            <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/674635/ffffff?text=Ceramic+Making';">
+                            <i class="fa-solid fa-play absolute inset-0 m-auto w-6 h-6 bg-red-600/90 text-white rounded-full flex items-center justify-center text-[10px]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white line-clamp-2">Behind The Scenes: Hand-Potting Vases</h4>
+                            <p class="text-xs text-stone-400 mt-1">15 min • Process & Vlogs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About The Creator & Brand Section -->
+    <section id="about" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Founder & Creator" class="rounded-3xl shadow-2xl object-cover h-[500px] w-full" onerror="this.onerror=null; this.src='https://placehold.co/800x1000/d5bfa1/543a2e?text=Creator+Portrait';">
+                    <div class="absolute -bottom-6 -right-6 bg-earth-800 text-white p-6 rounded-2xl shadow-xl hidden sm:block">
+                        <p class="font-serif italic text-lg">"Beauty lies in quiet simplicity."</p>
+                        <p class="text-xs uppercase font-bold text-earth-300 mt-2">— Elena Vance, Founder</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-earth-600 dark:text-earth-400">Our Story</span>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-earth-900 dark:text-stone-100">
+                        Bridging Lifestyle Content With Ethical Craftsmanship.
+                    </h2>
+                    <p class="text-stone-600 dark:text-stone-300 leading-relaxed font-light">
+                        INFUSO began as a passion project YouTube channel exploring slow fashion and warm minimalist interior design. Today, we partner directly with independent artisans to turn our channel lookbooks into real, tangible products for your home and wardrobe.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="border-l-2 border-earth-400 pl-4">
+                            <h4 class="font-bold text-stone-900 dark:text-stone-100">Zero Plastic Policy</h4>
+                            <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">All orders ship in compostable packaging.</p>
+                        </div>
+                        <div class="border-l-2 border-earth-400 pl-4">
+                            <h4 class="font-bold text-stone-900 dark:text-stone-100">Small Batch Production</h4>
+                            <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Preventing overproduction and landfill waste.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="reviews" class="py-20 bg-earth-100/40 dark:bg-stone-800/20 border-y border-earth-200/50 dark:border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-semibold uppercase tracking-widest text-earth-600 dark:text-earth-400">Community Feedback</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-1">Loved By Viewers & Customers</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-earth-50 dark:bg-stone-800 p-8 rounded-2xl border border-earth-200 dark:border-stone-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 text-sm mb-4">★★★★★</div>
+                        <p class="text-sm text-stone-600 dark:text-stone-300 italic leading-relaxed">
+                            "I saw the Ceramic Bud Vase on Elena's YouTube channel and ordered it immediately. It's even more stunning in person! Perfect texture and feel."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-earth-200 dark:border-stone-700 flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/b2895f/ffffff?text=Avatar';">
+                        <div>
+                            <h4 class="text-xs font-bold">Clara M.</h4>
+                            <p class="text-[10px] text-stone-400">Verified Buyer • California</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-earth-50 dark:bg-stone-800 p-8 rounded-2xl border border-earth-200 dark:border-stone-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 text-sm mb-4">★★★★★</div>
+                        <p class="text-sm text-stone-600 dark:text-stone-300 italic leading-relaxed">
+                            "The Linen Wrap Dress fits like a dream. Soft, breathable, and so easy to style according to her capsule wardrobe video recommendations!"
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-earth-200 dark:border-stone-700 flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/9b6e49/ffffff?text=Avatar';">
+                        <div>
+                            <h4 class="text-xs font-bold">Sophia T.</h4>
+                            <p class="text-[10px] text-stone-400">YouTube Subscriber • London</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-earth-50 dark:bg-stone-800 p-8 rounded-2xl border border-earth-200 dark:border-stone-700 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="text-amber-500 text-sm mb-4">★★★★★</div>
+                        <p class="text-sm text-stone-600 dark:text-stone-300 italic leading-relaxed">
+                            "Fast eco-shipping and superior quality. INFUSO is my go-to shop whenever I want to refresh my home decor with warm earthy tones."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-earth-200 dark:border-stone-700 flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/7d543b/ffffff?text=Avatar';">
+                        <div>
+                            <h4 class="text-xs font-bold">Julian K.</h4>
+                            <p class="text-[10px] text-stone-400">Verified Buyer • New York</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Product Detail Modal -->
+    <div id="productModal" class="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-earth-50 dark:bg-stone-900 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-earth-200 dark:border-stone-800 relative flex flex-col md:flex-row max-h-[90vh]">
+            <button id="closeModal" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-earth-200/80 dark:bg-stone-800 text-stone-700 dark:text-stone-200 flex items-center justify-center hover:bg-earth-300 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="md:w-1/2 h-64 md:h-auto bg-stone-200 dark:bg-stone-800">
+                <img id="modalImg" src="" alt="Product" class="w-full h-full object-cover">
+            </div>
+            <div class="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <span id="modalCategory" class="text-[10px] font-bold uppercase tracking-widest text-earth-600 dark:text-earth-400">Category</span>
+                    <h3 id="modalTitle" class="text-2xl font-serif font-bold text-stone-900 dark:text-white mt-1">Product Title</h3>
+                    <p id="modalPrice" class="text-xl font-semibold text-earth-700 dark:text-earth-300 mt-2">$0.00</p>
+                    <p id="modalDesc" class="text-sm text-stone-600 dark:text-stone-300 mt-4 leading-relaxed">Product description goes here...</p>
+                </div>
+
+                <div class="mt-8 space-y-4">
+                    <button id="modalAddCart" class="w-full py-4 rounded-xl bg-earth-800 hover:bg-earth-700 text-white font-bold text-sm tracking-wider uppercase transition shadow-lg">
+                        Add To Bag
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-earth-50 dark:bg-stone-900 w-full max-w-md h-full shadow-2xl flex flex-col justify-between p-6 border-l border-earth-200 dark:border-stone-800">
+            <div>
+                <!-- Cart Header -->
+                <div class="flex items-center justify-between pb-6 border-b border-earth-200 dark:border-stone-800">
+                    <h3 class="text-xl font-serif font-bold text-stone-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-earth-600"></i> Shopping Bag
+                    </h3>
+                    <button id="closeCart" class="p-2 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items Container -->
+                <div id="cartItems" class="mt-6 space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                    <!-- Dynamic Cart Items Injected Here -->
+                </div>
+            </div>
+
+            <!-- Cart Summary & Checkout -->
+            <div class="pt-6 border-t border-earth-200 dark:border-stone-800 space-y-4">
+                <div class="flex justify-between text-sm font-semibold">
+                    <span class="text-stone-500">Subtotal:</span>
+                    <span id="cartSubtotal" class="text-stone-900 dark:text-white font-bold">$0.00</span>
+                </div>
+                <p class="text-[11px] text-stone-400">Taxes and shipping calculated at checkout.</p>
+                
+                <button id="checkoutBtn" class="w-full py-4 rounded-xl bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold text-sm uppercase tracking-wider transition shadow-lg">
+                    Proceed To Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 text-sm hidden transform transition duration-300">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMsg">Item added to bag!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-earth-900 text-earth-200 py-16 border-t border-earth-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="space-y-4">
+                    <span class="font-serif text-3xl font-bold tracking-widest text-white">INFUSO</span>
+                    <p class="text-xs text-earth-300 leading-relaxed">
+                        Curated clothing & home goods crafted with intention. Elevating daily living through warm earthy tones and slow-made design.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-xs text-earth-300">
+                        <li><a href="#hero" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Shop All Products</a></li>
+                        <li><a href="#youtube" class="hover:text-white transition">YouTube Channel</a></li>
+                        <li><a href="#about" class="hover:text-white transition">Artisan Story</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-4">Customer Care</h4>
+                    <ul class="space-y-2 text-xs text-earth-300">
+                        <li><a href="#" class="hover:text-white transition">Shipping & Eco Packaging</a></li>
+                        <li><a href="#" class="hover:text-white transition">Returns & Exchanges</a></li>
+                        <li><a href="#" class="hover:text-white transition">Care Guide for Linen & Clay</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact Studio</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-4">Join The Club</h4>
+                    <p class="text-xs text-earth-300 mb-4">Get 10% off your first order & weekly lookbook updates.</p>
+                    <form id="newsletterForm" class="space-y-2">
+                        <input type="email" required placeholder="Enter your email" class="w-full px-4 py-2.5 rounded-xl bg-earth-800 border border-earth-700 text-white text-xs focus:outline-none focus:ring-1 focus:ring-earth-400">
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-earth-600 hover:bg-earth-500 text-white font-bold text-xs uppercase transition">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-earth-800 text-center text-xs text-earth-400 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                <p>© <span id="year"></span> INFUSO Studio & Living. All rights reserved.</p>
+                <div class="flex space-x-6 text-lg">
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Product Database
+        const products = [
+            {
+                id: 1,
+                name: "Oversized Organic Linen Kimono",
+                category: "fashion",
+                isBestseller: true,
+                price: 128.00,
+                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80",
+                description: "Handcrafted from 100% organic European flax. Breathable drape with deep functional pockets. Perfect for relaxed loungewear or outdoor layering."
+            },
+            {
+                id: 2,
+                name: "Textured Terracotta Bud Vase",
+                category: "decor",
+                isBestseller: true,
+                price: 46.00,
+                image: "https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?auto=format&fit=crop&w=600&q=80",
+                description: "Hand-thrown ceramic vase with a warm sand-speckled matte glaze. Designed specifically to feature dried flora and single stems."
+            },
+            {
+                id: 3,
+                name: "Minimalist Earth-Toned Knit Sweater",
+                category: "fashion",
+                isBestseller: false,
+                price: 94.00,
+                image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80",
+                description: "Ultra-soft wool knit sweater in a cozy caramel tone. Ethically spun and knit with reinforced cuffs."
+            },
+            {
+                id: 4,
+                name: "Sculptural Woven Wall Hanging",
+                category: "decor",
+                isBestseller: false,
+                price: 78.00,
+                image: "https://images.unsplash.com/photo-1522758971460-1d21eed7dc1d?auto=format&fit=crop&w=600&q=80",
+                description: "Handwoven tapestries using raw unbleached cotton cord and solid driftwood. Adds rich tactile warmth to any bedroom wall."
+            },
+            {
+                id: 5,
+                name: "Relaxed Fit Cotton Trousers",
+                category: "fashion",
+                isBestseller: true,
+                price: 82.00,
+                image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=80",
+                description: "High-waisted cotton slacks featuring an elastic rear waistband and tapered silhouette for everyday elegance."
+            },
+            {
+                id: 6,
+                name: "Artisan Wood Serving Bowl",
+                category: "decor",
+                isBestseller: false,
+                price: 64.00,
+                image: "https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&w=600&q=80",
+                description: "Hand-carved solid walnut bowl treated with natural food-safe beeswax. Ideal as a centerpiece or fruit basin."
+            },
+            {
+                id: 7,
+                name: "Raw Edge Cotton Table Runner",
+                category: "decor",
+                isBestseller: true,
+                price: 38.00,
+                image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80",
+                description: "Frayed edge botanical dyed cotton runner to elevate rustic dinner tables and holiday gatherings."
+            },
+            {
+                id: 8,
+                name: "Botanical Linen Bucket Hat",
+                category: "fashion",
+                isBestseller: false,
+                price: 42.00,
+                image: "https://images.unsplash.com/photo-1534215754734-18e55d13e346?auto=format&fit=crop&w=600&q=80",
+                description: "Packable, sun-protective linen bucket hat dyed in natural stone pigment."
+            }
+        ];
+
+        let cart = [];
+
+        // DOM Elements
+        const productGrid = document.getElementById('productGrid');
+        const cartBtn = document.getElementById('cartBtn');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const productModal = document.getElementById('productModal');
+        const closeModal = document.getElementById('closeModal');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const toast = document.getElementById('toast');
+
+        // Year update
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Dark/Light Mode Switcher
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-moon text-lg';
+                localStorage.setItem('infusoTheme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-sun text-lg';
+                localStorage.setItem('infusoTheme', 'dark');
+            }
+        }
+
+        if (localStorage.getItem('infusoTheme') === 'dark' || (!('infusoTheme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.className = 'fa-solid fa-sun text-lg';
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Render Product Catalog
+        function renderProducts(items) {
+            productGrid.innerHTML = '';
+            items.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = "group bg-earth-50 dark:bg-stone-800 rounded-3xl overflow-hidden border border-earth-200/80 dark:border-stone-700/60 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between";
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-square bg-stone-100 dark:bg-stone-900 cursor-pointer" onclick="openProductModal(${prod.id})">
+                        <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.src='https://placehold.co/600x600/c3a37d/ffffff?text=${encodeURIComponent(prod.name)}';">
+                        ${prod.isBestseller ? '<span class="absolute top-4 left-4 bg-earth-800 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow">Best Seller</span>' : ''}
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-earth-600 dark:text-earth-400">${prod.category}</span>
+                            <h3 class="font-serif font-bold text-lg text-stone-900 dark:text-white mt-1 cursor-pointer hover:text-earth-600 transition" onclick="openProductModal(${prod.id})">${prod.name}</h3>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between pt-4 border-t border-earth-200/60 dark:border-stone-700">
+                            <span class="font-semibold text-lg text-stone-900 dark:text-stone-100">$${prod.price.toFixed(2)}</span>
+                            <button onclick="addToCart(${prod.id})" class="p-3 rounded-full bg-earth-200 dark:bg-stone-700 hover:bg-earth-800 hover:text-white dark:hover:bg-earth-600 transition text-stone-800 dark:text-stone-200">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+
+        renderProducts(products);
+
+        // Filter Functionality
+        const catBtns = document.querySelectorAll('.cat-btn');
+        catBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catBtns.forEach(b => {
+                    b.classList.remove('bg-earth-800', 'text-white', 'shadow-md');
+                    b.classList.add('bg-earth-200/60', 'dark:bg-stone-800', 'text-stone-700', 'dark:text-stone-300');
+                });
+                btn.classList.remove('bg-earth-200/60', 'dark:bg-stone-800', 'text-stone-700', 'dark:text-stone-300');
+                btn.classList.add('bg-earth-800', 'text-white', 'shadow-md');
+
+                const cat = btn.getAttribute('data-category');
+                if (cat === 'all') {
+                    renderProducts(products);
+                } else if (cat === 'bestseller') {
+                    renderProducts(products.filter(p => p.isBestseller));
+                } else {
+                    renderProducts(products.filter(p => p.category === cat));
+                }
+            });
+        });
+
+        // Modal Handler
+        let currentActiveProd = null;
+        function openProductModal(id) {
+            currentActiveProd = products.find(p => p.id === id);
+            document.getElementById('modalImg').src = currentActiveProd.image;
+            document.getElementById('modalCategory').textContent = currentActiveProd.category;
+            document.getElementById('modalTitle').textContent = currentActiveProd.name;
+            document.getElementById('modalPrice').textContent = `$${currentActiveProd.price.toFixed(2)}`;
+            document.getElementById('modalDesc').textContent = currentActiveProd.description;
+            
+            productModal.classList.remove('hidden');
+        }
+
+        closeModal.addEventListener('click', () => productModal.classList.add('hidden'));
+
+        document.getElementById('modalAddCart').addEventListener('click', () => {
+            if (currentActiveProd) {
+                addToCart(currentActiveProd.id);
+                productModal.classList.add('hidden');
+            }
+        });
+
+        // Shopping Cart Logic
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Added "${product.name}" to your bag.`);
+        }
+
+        function updateCartUI() {
+            cartItems.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-12 text-stone-400">
+                        <i class="fa-solid fa-bag-shopping text-4xl mb-3"></i>
+                        <p class="text-sm">Your shopping bag is currently empty.</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    count += item.quantity;
+
+                    const row = document.createElement('div');
+                    row.className = "flex items-center gap-4 p-3 bg-earth-100/50 dark:bg-stone-800/60 rounded-2xl border border-earth-200/50 dark:border-stone-700";
+                    row.innerHTML = `
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/100x100/c3a37d/ffffff?text=Item';">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-bold text-stone-900 dark:text-white line-clamp-1">${item.name}</h4>
+                            <p class="text-xs text-earth-700 dark:text-earth-300 font-semibold mt-0.5">$${item.price.toFixed(2)}</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 rounded-full bg-earth-200 dark:bg-stone-700 text-xs flex items-center justify-center">-</button>
+                                <span class="text-xs font-bold">${item.quantity}</span>
+                                <button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 rounded-full bg-earth-200 dark:bg-stone-700 text-xs flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-stone-400 hover:text-red-500 p-2 text-sm">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    `;
+                    cartItems.appendChild(row);
+                });
+            }
+
+            cartCount.textContent = count;
+            cartSubtotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
+
+        cartBtn.addEventListener('click', () => cartDrawer.classList.remove('hidden'));
+        closeCart.addEventListener('click', () => cartDrawer.classList.add('hidden'));
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast("Your bag is empty! Add items first.");
+                return;
+            }
+            showToast("Redirecting to secure checkout simulation...");
+            cart = [];
+            updateCartUI();
+            setTimeout(() => cartDrawer.classList.add('hidden'), 2000);
+        });
+
+        // Toast Feedback
+        function showToast(message) {
+            document.getElementById('toastMsg').textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Search Drawer Toggle
+        const searchBtn = document.getElementById('searchBtn');
+        const searchModal = document.getElementById('searchModal');
+        const closeSearch = document.getElementById('closeSearch');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchBtn.addEventListener('click', () => {
+            searchModal.classList.remove('hidden');
+            searchInput.focus();
+        });
+        closeSearch.addEventListener('click', () => searchModal.classList.add('hidden'));
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                searchResults.innerHTML = '<p class="text-sm text-stone-400">Start typing to search products...</p>';
+                return;
+            }
+            const matches = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            if (matches.length === 0) {
+                searchResults.innerHTML = '<p class="text-sm text-stone-400">No products found matching your search.</p>';
+            } else {
+                searchResults.innerHTML = matches.map(m => `
+                    <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-earth-100 dark:hover:bg-stone-800 cursor-pointer" onclick="openProductModal(${m.id}); searchModal.classList.add('hidden');">
+                        <img src="${m.image}" class="w-10 h-10 object-cover rounded-lg">
+                        <div>
+                            <h4 class="text-sm font-bold text-stone-900 dark:text-white">${m.name}</h4>
+                            <p class="text-xs text-earth-600 font-semibold">$${m.price.toFixed(2)}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        });
+
+        // Mobile Nav Trigger
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        function scrollToShop() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form submit handler
+        document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast("Thank you for joining our newsletter!");
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
